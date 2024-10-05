@@ -1,270 +1,125 @@
 \documentclass{report}
-\usepackage{enumitem}   
+\usepackage{enumitem}
+\usepackage{amsmath} % For expanded math capabilities
 \input{preamble}
 \input{macros}
 \input{letterfonts}
 
-
-\title{\Huge{Number Theory \& Math Reasoning} \\ Instructor: Dr. Daniel Saracino}
+\title{\Huge{Number Theory \& Mathematical Reasoning} \\ Instructor: Dr. Daniel Saracino}
 \author{\huge{Note Taken by Daniel Jeong}}
 \date{from 2024-08-29 to 2024-12-20}
 
 \begin{document}
 
 \maketitle
-\newpage% or \cleardoublepage
-% \pdfbookmark[<level>]{<title>}{<dest>}
-\pdfbookmark[section]{\contentsname}{toc}
-\tableofcontents
+\newpage
 \pagebreak
 
-\chapter{Some Basic Ideas}
-\section{What should I name it?}
-
-\notation 
-
-$x \in S$: $x$ is an element of set $S$
-
-$x \notin S$: $x$ is not an element of $S$
-
-$\mathbb{Z}$: The set of integers; \{... , -2, -1, 0, 1, 2, ...\}
-
-$\mathbb{Z}^+$: The set of positive integers; \{1, 2, ...\}
-
-\dfn{Divide}{If $m$ and $n$ are integers, we say that $m$ divides $n$, and we write $m|n$, if there exists some $c \in \mathbb{Z}$ such that $n=mc$.
-
-If $n \neq mc$, $m$ does not divide $n$, and we write $m \nmid n$.
-}
-
-\pitf{Zero \textbf{CAN} divide zero}{
-  Since $0 = 0 \times c$  is true for any integer $c$, 0 divides 0.
-  }
-\pitf{Integer $c$ \textbf{CAN} be negative}{
-$a \mid b$ and $b \mid a$ does not mean $a = b$.
-
-e.g. a = 4, b = -4
-}
-
-\dfn{Greatest Common Divisor (gcd)}{
-  If $m$ and $n$ are integers and not both are 0, then the \textit{greatest comon divisor} of $m$ and $n$ is the largest integer that divides both $m$ and $n$. 
-  We denote the gcd of $m$ and $n$ by (m, n) or gcd(m, n).  \linebreak
-
-  e.g., $(12, 18) = 6$.
-  
-  gcd(0, 0) is undefined because every integer can divide 0.
-
-}
-
-\insight{gcd is always positive}{
-  e.g., (-45, 27) = 9. (-28, 39) = 1
-}
-
-
-\thm{}{For all integers $a$, $b$, $c$, $d$:
+\thm{Theorem 1}{For all integers $a$, $b$, $c$, $d$: 
 \begin{enumerate}[label=(\roman*)]
-  \item If $a \mid b$ and $b \mid c$ then $a \mid c$
-  \item If $a \mid b$ and $a \mid c$ then for all $x, y \in \mathbb{Z}$, $a \mid (xb+yc)$ 
-  \item If $a \mid b$ and $c \mid d$ then $ac \mid bd$
+  \item If $a \mid b$ and $b \mid c$, then $a \mid c$.
+  \item If $a \mid b$ and $a \mid c$, then for all $x, y \in \mathbb{Z}$, $a \mid (xb + yc)$.
+  \item If $a \mid b$ and $c \mid d$, then $ac \mid bd$.
 \end{enumerate}
 }
 
-\begin{myproof} Since $a \mid b$, there exists $k \in \mathbb{Z}$ such that $b = ak$
-
-  Since $b \mid c$, there exists $l \in \mathbb{Z}$ that $c = bl$
-
-  Then 
-  \begin{equation} \notag
-    \begin{aligned}
-      c &= bl \\
-        &=(ak)l \\
-        &= a(kl)
-    \end{aligned}
-  \end{equation}
-
-  Since $k, l \in \mathbb{Z}$, $kl \in \mathbb{Z}$. \\
-  So since $c=a(kl)$, $a \mid c$. $\square$
-\end{myproof}
-
-\thm{}{Suppose $a$ and $b$ are integers that are not both 0, so that $(a, b)$ exists. b\\
+\thm{Theorem 2}{Suppose $a$ and $b$ are integers that are not both $0$, so that $(a, b)$ exists.  
 Then for every $n \in \mathbb{Z}$,
-\begin{equation} \notag
-  \begin{aligned}
-    (a, b) &= (a+nb, b) \\
-      &=(a, b+na)
-  \end{aligned}
-\end{equation}
+\[ 
+(a, b) = (a + nb, b) = (a, b + na)
+\]
 }
 
-skipped Proof of Theorem 2
+\thm{Theorem 3}{Every integer $n \geq 2$ is the product of one or more primes.}
 
-\dfn{Euclidean Algorithm}{The Euclidean Algorithm is a method for finding the greatest common divisor (GCD) of two numbers.
+\thm{Theorem 4}{There exist infinitely many primes.}
 
-It works as follows:
-\begin{enumerate}
-  \item Take two positive integers $a$ and $b$. 
-  \item Divide $a$ by $b$. If the remainder is 0, $b$ is the GCD. 
-  \item If not, replace $a$ with $b$, and $b$ with the remainder. 
-  \item Repeat steps 2-3 until the remainder is 0.
+\thm{Theorem 5}{For every integer $n \geq 2$, the factorization of $n$ into primes is unique, 
+except for the order in which the factors are written.}
+
+\thm{Theorem 6}{Suppose $m \in \mathbb{Z}^+$ and $a, b \in \mathbb{Z}$.
+Then the following are equivalent:
+\begin{enumerate}[label=(\roman*)]
+    \item $a \equiv b \pmod{m}$; that is, $m \mid (a - b)$.
+    \item $a = b + m\ell$ for some $\ell \in \mathbb{Z}$.
+    \item $\overline{a}^m = \overline{b}^m$.
 \end{enumerate}
-
-The last non-zero remainder is the GCD of the original two numbers.
-
-This algorithm works because the GCD of two numbers is also the GCD of the smaller number and the remainder of the larger number divided by the smaller one.}
-
-\mlenma{Bezout's Lemma}{
-  If $m$ and $n$ are integers that are not both zero that $(m, n)$ exists,\\ then 
-  there exist $x, y \in \mathbb{Z}$ such that $xm + yn = (m, n)$
-} 
-
-\dfn{Coprime}{
-  We say integers $a$ and $b$ are relatively prime(or "coprime") if (a,b)=1
+Thus, the remainders are equal, and any one of (i), (ii), or (iii) proves the other two.
 }
 
-
-
-\qs{}{Is the set ${x-}$axis${\setminus\{\text{Origin}\}}$ a closed set}
-\sol We have to take its complement and check whether that set is a open set i.e. if it is a union of open balls
-\nt{We will do topology in Normed Linear Space  (Mainly $\bbR^n$ and occasionally $\bbC^n$)using the language of Metric Space}
-\clm{Topology}{}{Topology is cool}
-\ex{Open Set and Close Set}{
-	\begin{tabular}{rl}
-		Open Set:   & $\bullet$ $\phi$                                              \\
-		            & $\bullet$ $\bigcup\limits_{x\in X}B_r(x)$ (Any $r>0$ will do) \\[3mm]
-		            & $\bullet$ $B_r(x)$ is open                                    \\
-		Closed Set: & $\bullet$ $X,\ \phi$                                          \\
-		            & $\bullet$ $\overline{B_r(x)}$                                 \\
-		            & $x-$axis $\cup$ $y-$axis
-	\end{tabular}}
-\thm{}{If $x\in$ open set $V$ then $\exists$ $\delta>0$ such that $B_{\delta}(x)\subset V$}
-\begin{myproof}By openness of $V$, $x\in B_r(u)\subset V$
-	\begin{center}
-		\begin{tikzpicture}
-			\draw[red] (0,0) circle [x radius=3.5cm, y radius=2cm] ;
-			\draw (3,1.6) node[red]{$V$};
-			\draw [blue] (1,0) circle (1.45cm) ;
-			\filldraw[blue] (1,0) circle (1pt) node[anchor=north]{$u$};
-			\draw (2.9,0.4) node[blue]{$B_r(u)$};
-			\draw [green!40!black] (1.7,0) circle (0.5cm) node [yshift=0.7cm]{$B_{\delta}(x)$} ;
-			\filldraw[green!40!black] (1.7,0) circle (1pt) node[anchor=west]{$x$};
-		\end{tikzpicture}
-	\end{center}
-
-	Given $x\in B_r(u)\subset V$, we want $\delta>0$ such that $x\in B_{\delta} (x)\subset B_r(u)\subset V$. Let $d=d(u,x)$. Choose $\delta $ such that $d+\delta<r$ (e.g. $\delta<\frac{r-d}{2}$)
-
-	If $y\in B_{\delta}(x)$ we will be done by showing that $d(u,y)<r$ but $$d(u,y)\leq d(u,x)+d(x,y)<d+\delta<r$$
-\end{myproof}
-
-\cor{}{By the result of the proof, we can then show...}
-\mlenma{}{Suppose $\vec{v_1}, \dots, \vec{v_n} \in \RR[n]$ is subspace of $\RR^n$.}
-\mprop{}{$1 + 1 = 2$.}
-\section{Random Examples}
-\dfn{Limit of Sequence in $\bs{\bbR}$}{Let $\{s_n\}$ be a sequence in $\bbR$. We say $$\lim_{n\to\infty}s_n=s$$ where $s\in\bbR$ if $\forall$ real numbers $\eps>0$ $\exists$ natural number $N$ such that for $n>N$ $$s-\eps<s_n<s+\eps\text{ i.e. }|s-s_n|<\eps$$}
-\qs{}{Is the set ${x-}$axis${\setminus\{\text{Origin}\}}$ a closed set}
-\sol We have to take its complement and check whether that set is a open set i.e. if it is a union of open balls
-\nt{We will do topology in Normed Linear Space  (Mainly $\bbR^n$ and occasionally $\bbC^n$)using the language of Metric Space}
-\clm{Topology}{}{Topology is cool}
-\ex{Open Set and Close Set}{
-	\begin{tabular}{rl}
-		Open Set:   & $\bullet$ $\phi$                                              \\
-		            & $\bullet$ $\bigcup\limits_{x\in X}B_r(x)$ (Any $r>0$ will do) \\[3mm]
-		            & $\bullet$ $B_r(x)$ is open                                    \\
-		Closed Set: & $\bullet$ $X,\ \phi$                                          \\
-		            & $\bullet$ $\overline{B_r(x)}$                                 \\
-		            & $x-$axis $\cup$ $y-$axis
-	\end{tabular}}
-\thm{}{If $x\in$ open set $V$ then $\exists$ $\delta>0$ such that $B_{\delta}(x)\subset V$}
-\begin{myproof}By openness of $V$, $x\in B_r(u)\subset V$
-	\begin{center}
-		\begin{tikzpicture}
-			\draw[red] (0,0) circle [x radius=3.5cm, y radius=2cm] ;
-			\draw (3,1.6) node[red]{$V$};
-			\draw [blue] (1,0) circle (1.45cm) ;
-			\filldraw[blue] (1,0) circle (1pt) node[anchor=north]{$u$};
-			\draw (2.9,0.4) node[blue]{$B_r(u)$};
-			\draw [green!40!black] (1.7,0) circle (0.5cm) node [yshift=0.7cm]{$B_{\delta}(x)$} ;
-			\filldraw[green!40!black] (1.7,0) circle (1pt) node[anchor=west]{$x$};
-		\end{tikzpicture}
-	\end{center}
-
-	Given $x\in B_r(u)\subset V$, we want $\delta>0$ such that $x\in B_{\delta} (x)\subset B_r(u)\subset V$. Let $d=d(u,x)$. Choose $\delta $ such that $d+\delta<r$ (e.g. $\delta<\frac{r-d}{2}$)
-
-	If $y\in B_{\delta}(x)$ we will be done by showing that $d(u,y)<r$ but $$d(u,y)\leq d(u,x)+d(x,y)<d+\delta<r$$
-\end{myproof}
-
-\cor{}{By the result of the proof, we can then show...}
-\mlenma{}{Suppose $\vec{v_1}, \dots, \vec{v_n} \in \RR[n]$ is subspace of $\RR^n$.}
-\mprop{}{$1 + 1 = 2$.}
-
-\section{Random}
-\dfn{Normed Linear Space and Norm $\boldsymbol{\|\cdot\|}$}{Let $V$ be a vector space over $\bbR$ (or $\bbC$). A norm on $V$ is function $\|\cdot\|\ V\to \bbR_{\geq 0}$ satisfying \begin{enumerate}[label=\bfseries\tiny\protect\circled{\small\arabic*}]
-		\item \label{n:1}$\|x\|=0 \iff x=0$ $\forall$ $x\in V$
-		\item \label{n:2}	$\|\lambda x\|=|\lambda|\|x\|$ $\forall$ $\lambda\in\bbR$(or $\bbC$), $x\in V$
-		\item \label{n:3} $\|x+y\| \leq \|x\|+\|y\|$ $\forall$ $x,y\in V$ (Triangle Inequality/Subadditivity)
-	\end{enumerate}And $V$ is called a normed linear space.
-
-	$\bullet $ Same definition works with $V$ a vector space over $\bbC$ (again $\|\cdot\|\to\bbR_{\geq 0}$) where \ref{n:2} becomes $\|\lambda x\|=|\lambda|\|x\|$ $\forall$ $\lambda\in\bbC$, $x\in V$, where for $\lambda=a+ib$, $|\lambda|=\sqrt{a^2+b^2}$ }
-
-
-\ex{$\bs{p-}$Norm}{\label{pnorm}$V={\bbR}^m$, $p\in\bbR_{\geq 0}$. Define for $x=(x_1,x_2,\cdots,x_m)\in\bbR^m$ $$\|x\|_p=\Big(|x_1|^p+|x_2|^p+\cdots+|x_m|^p\Big)^{\frac1p}$$(In school $p=2$)}
-\textbf{Special Case $\bs{p=1}$}: $\|x\|_1=|x_1|+|x_2|+\cdots+|x_m|$ is clearly a norm by usual triangle inequality. \par
-\textbf{Special Case $\bs{p\to\infty\ (\bbR^m$ with $\|\cdot\|_{\infty})}$}: $\|x\|_{\infty}=\max\{|x_1|,|x_2|,\cdots,|x_m|\}$\\
-For $m=1$ these $p-$norms are nothing but $|x|$.
-Now exercise
-\qs{}{\label{exs1}Prove that triangle inequality is true if $p\geq 1$ for $p-$norms. (What goes wrong for $p<1$ ?)}
-\sol{\textbf{For Property \ref{n:3} for norm-2}	\subsubsection*{\textbf{When field is $\bbR:$}} We have to show\begin{align*}
-		         & \sum_i(x_i+y_i)^2\leq \left(\sqrt{\sum_ix_i^2} +\sqrt{\sum_iy_i^2}\right)^2                                       \\
-		\implies & \sum_i (x_i^2+2x_iy_i+y_i^2)\leq \sum_ix_i^2+2\sqrt{\left[\sum_ix_i^2\right]\left[\sum_iy_i^2\right]}+\sum_iy_i^2 \\
-		\implies & \left[\sum_ix_iy_i\right]^2\leq \left[\sum_ix_i^2\right]\left[\sum_iy_i^2\right]
-	\end{align*}So in other words prove $\langle x,y\rangle^2 \leq \langle x,x\rangle\langle y,y\rangle$ where
-	$$\langle x,y\rangle =\sum\limits_i x_iy_i$$
-
-	\begin{note}
-		\begin{itemize}
-			\item $\|x\|^2=\langle x,x\rangle$
-			\item $\langle x,y\rangle=\langle y,x\rangle$
-			\item $\langle \cdot,\cdot\rangle$ is $\bbR-$linear in each slot i.e. \begin{align*}
-				      \langle rx+x',y\rangle=r\langle x,y\rangle+\langle x',y\rangle	\text{ and similarly for second slot}
-			      \end{align*}Here in $\langle x,y\rangle$ $x$ is in first slot and $y$ is in second slot.
-		\end{itemize}
-	\end{note}Now the statement is just the Cauchy-Schwartz Inequality. For proof $$\langle x,y\rangle^2\leq \langle x,x\rangle\langle y,y\rangle $$ expand everything of $\langle x-\lambda y,x-\lambda y\rangle$ which is going to give a quadratic equation in variable $\lambda $ \begin{align*}
-		\langle x-\lambda y,x-\lambda y\rangle & =\langle x,x-\lambda y\rangle-\lambda\langle y,x-\lambda y\rangle                                       \\
-		                                       & =\langle x ,x\rangle -\lambda\langle x,y\rangle -\lambda\langle y,x\rangle +\lambda^2\langle y,y\rangle \\
-		                                       & =\langle x,x\rangle -2\lambda\langle x,y\rangle+\lambda^2\langle y,y\rangle
-	\end{align*}Now unless $x=\lambda y$ we have $\langle x-\lambda y,x-\lambda y\rangle>0$ Hence the quadratic equation has no root therefore the discriminant is greater than zero.
-
-	\subsubsection*{\textbf{When field is $\bbC:$}}Modify the definition by $$\langle x,y\rangle=\sum_i\overline{x_i}y_i$$Then we still have $\langle x,x\rangle\geq 0$}
-
-\section{Algorithms}
-\begin{algorithm}[H]
-\caption{what about}
-\KwIn{This is some input}
-\KwOut{This is some output}
-\SetAlgoLined
-\SetNoFillComment
-\tcc{This is a comment}
-\vspace{3mm}
-some code here\;
-$x \leftarrow 0$\;
-$y \leftarrow 0$\;
-\uIf{$ x > 5$} {
-    x is greater than 5 \tcp*{This is also a comment}
+\thm{Theorem 7}{Basic Properties of Congruence Modulo $m$:\\
+Suppose $m \in \mathbb{Z}^+$, then the following all hold:
+\begin{enumerate}[label=(\roman*)]
+    \item **Reflexivity**: For every $a \in \mathbb{Z}$, $a \equiv a \pmod{m}$.
+    \item **Symmetry**: For all $a, b \in \mathbb{Z}$, if $a \equiv b \pmod{m}$, then $b \equiv a \pmod{m}$.
+    \item **Transitivity**: For all $a, b, c \in \mathbb{Z}$, if $a \equiv b \pmod{m}$ and $b \equiv c \pmod{m}$, then $a \equiv c \pmod{m}$.
+\end{enumerate}
+When a relationship between elements of a set $S$ is reflexive, symmetric, and transitive, the relationship is called an equivalence relation on $S$.\\
+Thus, **Theorem 7** says that "congruence modulo $m$" is an equivalence relation on the set $\mathbb{Z}$.
 }
-\Else {
-    x is less than or equal to 5\;
-}
-\ForEach{y in 0..5} {
-    $y \leftarrow y + 1$\;
-}
-\For{$y$ in $0..5$} {
-    $y \leftarrow y - 1$\;
-}
-\While{$x > 5$} {
-    $x \leftarrow x - 1$\;
-}
-\Return Return something here\;
-\end{algorithm}
 
+\thm{Theorem 8}{Suppose $m \in \mathbb{Z}^+$, and let $a, b, c, d \in \mathbb{Z}$.\\
+Then, if $a \equiv b \pmod{m}$ and $c \equiv d \pmod{m}$, we have:
+\begin{enumerate}
+    \item $a + c \equiv b + d \pmod{m}$.
+    \item $ac \equiv bd \pmod{m}$.
+\end{enumerate}
+}
 
+\mlenma{Bezout's Lemma}{If $m$ and $n$ are integers that are not both zero, 
+then there exist $x, y \in \mathbb{Z}$ such that $xm + yn = (m, n)$.}
 
+\mlenma{Euclid's Lemma}{Suppose $a$, $b$, $c$ are integers such that $a \mid bc$ and $(a, b) = 1$.  
+Then $a \mid c$.}
+
+\dfn{Coprime}{We say integers $a$ and $b$ are relatively prime (or "coprime") if $(a, b) = 1$.}
+
+\dfn{Prime}{An integer $p$ is prime if $p > 1$ and the only positive integers that divide $p$ are $1$ and $p$.}
+
+\cor{}{Every integer $n \ge 2$ has a unique representation in the form:
+\[
+n = p_{1}^{e_{1}} \times p_{2}^{e_{2}} \times p_{3}^{e_{3}} \times \cdots \times p_{k}^{e_{k}}
+\]
+where the $p$'s are distinct primes and each $e_i \ge 1$. This is called the prime-power decomposition of $n$.}
+
+\cor{}{Suppose $n \geq 2$ and the prime-power decomposition (ppd) of $n$ is:
+\[
+n = p_{1}^{e_{1}} \times p_{2}^{e_{2}} \times p_{3}^{e_{3}} \times \cdots \times p_{k}^{e_{k}}.
+\]
+Then if $m$ is any positive integer that divides $n$,
+\[
+m = p_{1}^{f_{1}} \times p_{2}^{f_{2}} \times p_{3}^{f_{3}} \times \cdots \times p_{k}^{f_{k}}
+\]
+for some integers $f_1, \cdots, f_k$ such that $0 \leq f_i \leq e_i$.}
+
+\cor{}{If
+\[
+n = p_{1}^{c_{1}} \times p_{2}^{c_{2}} \times p_{3}^{c_{3}} \times \cdots \times p_{k}^{c_{k}}
+\]
+and
+\[
+m = p_{1}^{d_{1}} \times p_{2}^{d_{2}} \times p_{3}^{d_{3}} \times \cdots \times p_{k}^{d_{k}},
+\]
+where $p_1, \cdots, p_k$ are distinct primes, and the $c_i$'s and $d_i$'s are nonnegative integers, then:
+\[
+(m, n) = p_1^{\min(c_1, d_1)} \times p_2^{\min(c_2, d_2)} \times \cdots \times p_k^{\min(c_k, d_k)}.
+\]}
+
+\cor{}{If $n$ is an integer such that $n \geq 2$, then there exists a positive integer $m$ such that $n = m^2$ if and only if all the exponents in the ppd of $n$ are even.}
+
+\cor{Theorem 8-1}{Suppose $a \equiv b \pmod{m}$. Then:
+\begin{align*}
+a &\equiv b \pmod{m}, \\
+a^2 &\equiv b^2 \pmod{m}, \\
+a^3 &\equiv b^3 \pmod{m}, \\
+\vdots & \\
+a^k &\equiv b^k \pmod{m} \quad \text{for every} \ k \in \mathbb{Z}^+.
+\end{align*}
+
+Thus, using part (ii) of Theorem 8 repeatedly, we get:  
+If $a \equiv b \pmod{m}$, then $a^k \equiv b^k \pmod{m}$ for every $k \in \mathbb{Z}^+$.}
+
+\cor{Theorem 8-2}{If $p(x)$ is a polynomial with integer coefficients and $a \equiv b \pmod{m}$,  
+then $p(a) \equiv p(b) \pmod{m}$.}
 
 \end{document}
